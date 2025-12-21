@@ -1,38 +1,50 @@
-import { type User, type InsertUser } from "@shared/schema";
-import { randomUUID } from "crypto";
-
-// modify the interface with any CRUD methods
-// you might need
+import { db } from "./db";
+import {
+  projects, skills, experience, contactMessages,
+  type Project, type Skill, type Experience, type InsertContactMessage
+} from "@shared/schema";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
-  getUser(id: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  getProjects(): Promise<Project[]>;
+  getSkills(): Promise<Skill[]>;
+  getExperience(): Promise<Experience[]>;
+  createContactMessage(message: InsertContactMessage): Promise<void>;
+  
+  // Seeding methods
+  createProject(project: Omit<Project, "id">): Promise<void>;
+  createSkill(skill: Omit<Skill, "id">): Promise<void>;
+  createExperience(exp: Omit<Experience, "id">): Promise<void>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-
-  constructor() {
-    this.users = new Map();
+export class DatabaseStorage implements IStorage {
+  async getProjects(): Promise<Project[]> {
+    return await db.select().from(projects);
   }
 
-  async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+  async getSkills(): Promise<Skill[]> {
+    return await db.select().from(skills);
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+  async getExperience(): Promise<Experience[]> {
+    return await db.select().from(experience);
   }
 
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+  async createContactMessage(message: InsertContactMessage): Promise<void> {
+    await db.insert(contactMessages).values(message);
+  }
+
+  async createProject(project: Omit<Project, "id">): Promise<void> {
+    await db.insert(projects).values(project);
+  }
+
+  async createSkill(skill: Omit<Skill, "id">): Promise<void> {
+    await db.insert(skills).values(skill);
+  }
+
+  async createExperience(exp: Omit<Experience, "id">): Promise<void> {
+    await db.insert(experience).values(exp);
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
