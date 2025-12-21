@@ -1,0 +1,118 @@
+Portfolio Website Structure
+
+1. Hero Section
+
+Name: Fareed-ud-Din Munawwar 
+
+Title: Senior Software Engineer 
+
+Sub-headline: Specialist in High-Performance Mobile Architectures & Scalable E-Learning Systems 
+
+Call to Action: [Explore Projects] | [View GitHub] | [Contact Me]
+
+2. About Me
+
+Profile Summary: A results-driven Senior Software Engineer with a proven track record in developing stable, user-friendly, and high-performing mobile applications.
+
+Core Philosophy: I focus on scalable application design and performance optimization, consistently maintaining a 99.98% crash-free rate and 4.8+ ratings on Google Play.
++1
+
+Education: BS in Computer Science, Information Technology University (Magna Cum Laude, CGPA 3.75/4.0).
+
+3. Technical Expertise
+
+Languages: Kotlin (Primary), Java, TypeScript, PHP, JavaScript.
+
+Mobile Platforms: Android (Native), Moodle Mobile.
++4
+
+Hybrid Frameworks: React Native, Ionic, Angular.
++2
+
+Mobile Frameworks: Jetpack Compose, Coroutines, Flow, Retrofit, ExoPlayer, Room, SQL Delight.
+
+Architecture: MVVM, Clean Architecture, Multi-Module, SOLID Principles.
+
+Tools: Firebase (Crashlytics, Firestore), Hilt, Dagger, Git, Mockito, Xcode, MySQL.
++2
+
+4. Featured Projects
+
+A. Islam360 & Hindi Hadith 360
+
+Role: Lead Android Developer.
++2
+
+Impact: Contributed to applications with 4.8+ ratings on Google Play through enhanced stability and user satisfaction.
++1
+
+Key Work:
+
+Led development using Kotlin and MVVM architecture.
+
+Implemented location-based prayer timings and an interactive UI redesign using Jetpack Compose.
++1
+
+Achieved ~90% code coverage by introducing Unit Testing with Mockito.
+
+Managed multi-lingual support (Arabic, Hindi) and in-app purchases.
+
+B. Schoolgram (Moodle-Based E-Learning)
+
+Role: Lead Developer for Mobile.
++1
+
+Stack: Ionic, Angular, Moodle Mobile.
++1
+
+Key Work:
+
+Upgraded core codebase from Moodle Mobile 3.5.5 to 5.0.0, ensuring functionality of all custom components.
+
+Migrated and refactored custom plugins/libraries for improved scalability and maintainability.
++1
+
+Implemented customized app themes, layouts, and multi-lingual support.
+
+Defined and executed release processes for both Google Play Store and Apple App Store.
+
+C. ALW (Advanced Learning World)
+
+Role: Key Android Developer.
++1
+
+Stack: Kotlin, Hilt, Firebase, OneSignal.
++2
+
+Key Work:
+
+Built critical modules from scratch, including the Assignment Module, Calendar, and Quiz.
++1
+
+Integrated HyperPay for card payments and Google In-App Purchases.
+
+Maintained a 99.98% crash-free experience while revamping signup and subscription flows.
++1
+
+D. Reel / Stories Application (Open Source)
+
+Stack: Native Android (Kotlin), ExoPlayer.
++1
+
+Features: An Instagram-like stories implementation designed for seamless video playback and high reusability in external projects.
++1
+
+5. Professional Experience
+
+Senior Software Engineer | Arbisoft (August 2021 – Present).
+
+Leading cross-functional teams in Agile environments.
++1
+
+Actively involved in hiring processes for senior roles and mentoring interns in native development.
+
+6. Personal Interests
+
+Hobbies: Enthusiastic about Formula 1 racing, cricket, and football.
+
+Tech Community: Regularly follow tech blogs, books, and podcasts regarding the latest trends in innovation and technology
