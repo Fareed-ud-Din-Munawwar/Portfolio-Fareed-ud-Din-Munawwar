@@ -18,7 +18,6 @@ function Router() {
 }
 
 function App() {
-  // Add dark mode class to html element on mount
   useEffect(() => {
     document.documentElement.classList.add('dark');
   }, []);
