@@ -33,6 +33,11 @@ jobs:
 
       - name: Build client
         run: npm run build:client
+        env:
+          GITHUB_PAGES: true
+
+      - name: Create 404.html for SPA routing
+        run: cp dist/public/index.html dist/public/404.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
