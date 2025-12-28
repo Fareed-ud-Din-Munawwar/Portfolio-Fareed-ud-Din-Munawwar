@@ -1,58 +1,34 @@
-import { useEffect, useState } from "react";
+import React from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ProjectCard } from "@/components/ProjectCard";
-import { useProjects, useSkills, useExperience, useContact } from "@/hooks/use-portfolio";
+import { staticProjects, staticSkills, staticExperience } from "@/data/portfolio";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Link as ScrollLink } from "react-scroll";
-import { ArrowDown, Mail, Github, Linkedin, Smartphone, Code2, Database, Globe, Briefcase, GraduationCap, Trophy, Terminal, Award, Layers } from "lucide-react";
+import { ArrowDown, Mail, Github, Linkedin, Smartphone, Code2, Database, Globe, GraduationCap, Trophy, Terminal, Award, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { insertContactSchema, type InsertContactMessage } from "@shared/routes";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 export default function Home() {
-  const { data: projects, isLoading: projectsLoading } = useProjects();
-  const { data: skills, isLoading: skillsLoading } = useSkills();
-  const { data: experience, isLoading: experienceLoading } = useExperience();
-  const { mutateAsync: sendMessage, isPending: isSending } = useContact();
   const { toast } = useToast();
   
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 500], [0, 200]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
-  const form = useForm<InsertContactMessage>({
-    resolver: zodResolver(insertContactSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      message: "",
-    },
-  });
-
-  const onSubmit = async (data: InsertContactMessage) => {
-    try {
-      await sendMessage(data);
-      toast({
-        title: "Message Sent!",
-        description: "Thanks for reaching out. I'll get back to you soon.",
-      });
-      form.reset();
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message || "Something went wrong. Please try again.",
-        variant: "destructive",
-      });
-    }
+  const handleContactSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    toast({
+      title: "Thank You!",
+      description: "Thanks for reaching out. I'll get back to you soon.",
+    });
+    // Reset form
+    const form = e.currentTarget;
+    form.reset();
   };
 
   const skillIcons: Record<string, any> = {
@@ -84,7 +60,7 @@ export default function Home() {
           <div className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-blue-600/20 rounded-full blur-3xl opacity-30" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center mt-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -141,38 +117,13 @@ export default function Home() {
       {/* ABOUT SECTION */}
       <section id="about" className="py-24 bg-card/30 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div className="flex justify-center">
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-            >
-              {/* Using a placeholder for profile image or abstract shape if no image provided */}
-              <div className="relative aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 border border-white/5 flex items-center justify-center group">
-                 <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                 <Code2 className="w-32 h-32 text-white/10 group-hover:text-primary/20 transition-colors duration-500" />
-                 
-                 {/* Decorative elements */}
-                 <div className="absolute bottom-6 left-6 right-6 bg-background/90 backdrop-blur p-4 rounded-xl border border-white/5 shadow-xl">
-                   <div className="flex items-center gap-3">
-                     <div className="p-2 bg-primary/20 rounded-lg text-primary">
-                       <Award className="w-5 h-5" />
-                     </div>
-                     <div>
-                       <div className="font-bold text-sm">Magna Cum Laude</div>
-                       <div className="text-xs text-muted-foreground">Information Technology University</div>
-                     </div>
-                   </div>
-                 </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              className="max-w-3xl text-center"
             >
               <h2 className="text-3xl md:text-4xl font-bold font-display mb-6">Results-Driven Engineering</h2>
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
@@ -182,7 +133,7 @@ export default function Home() {
                 Beyond code, I focus on system reliability, user experience optimization, and mentoring junior developers to build robust engineering cultures.
               </p>
 
-              <div className="space-y-4">
+              <div className="space-y-4 flex justify-center">
                 <div className="flex items-start gap-4">
                   <div className="mt-1 p-2 rounded-lg bg-primary/10 text-primary">
                     <GraduationCap className="w-5 h-5" />
@@ -204,13 +155,8 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionHeading title="Technical Expertise" subtitle="A comprehensive toolkit for modern application development" />
 
-          {skillsLoading ? (
-             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-               {[1,2,3].map(i => <div key={i} className="h-64 bg-card/50 rounded-2xl animate-pulse" />)}
-             </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {skills?.map((skillGroup, index) => {
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {staticSkills.map((skillGroup, index) => {
                 const Icon = getCategoryIcon(skillGroup.category);
                 return (
                   <motion.div
@@ -238,8 +184,7 @@ export default function Home() {
                   </motion.div>
                 );
               })}
-            </div>
-          )}
+          </div>
         </div>
       </section>
 
@@ -249,10 +194,7 @@ export default function Home() {
           <SectionHeading title="Professional Journey" />
 
           <div className="relative border-l-2 border-white/10 ml-3 md:ml-6 space-y-12 pl-8 md:pl-12 py-4">
-            {experienceLoading ? (
-              <div className="h-40 bg-card rounded-xl animate-pulse" />
-            ) : (
-              experience?.map((role, index) => (
+            {staticExperience.map((role, index) => (
                 <motion.div
                   key={role.id}
                   initial={{ opacity: 0, x: -20 }}
@@ -277,8 +219,7 @@ export default function Home() {
                     {role.description}
                   </p>
                 </motion.div>
-              ))
-            )}
+              ))}
           </div>
         </div>
       </section>
@@ -288,17 +229,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading title="Featured Projects" subtitle="Scalable applications impacting millions of users" />
 
-          {projectsLoading ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[1,2,3].map(i => <div key={i} className="h-[400px] bg-card rounded-2xl animate-pulse" />)}
-            </div>
-          ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects?.map((project, index) => (
-                <ProjectCard key={project.id} project={project} index={index} />
-              ))}
-            </div>
-          )}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {staticProjects.map((project, index) => (
+              <ProjectCard key={project.id} project={project} index={index} />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -346,15 +281,15 @@ export default function Home() {
                    </p>
                    
                    <div className="space-y-6">
-                      <a href="mailto:hello@example.com" className="flex items-center gap-3 text-blue-100 hover:text-white transition-colors">
+                      <a href="mailto:fareed.munawwar1@gmail.com" className="flex items-center gap-3 text-blue-100 hover:text-white transition-colors">
                          <Mail className="w-5 h-5" />
-                         <span>hello@example.com</span>
+                         <span>Fareed-ud-Din Munawwar</span>
                       </a>
-                      <a href="https://github.com" target="_blank" rel="noreferrer" className="flex items-center gap-3 text-blue-100 hover:text-white transition-colors">
+                      <a href="https://github.com/Fareed-ud-Din-Munawwar" target="_blank" rel="noreferrer" className="flex items-center gap-3 text-blue-100 hover:text-white transition-colors">
                          <Github className="w-5 h-5" />
                          <span>@fareedmunawwar</span>
                       </a>
-                      <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="flex items-center gap-3 text-blue-100 hover:text-white transition-colors">
+                      <a href="https://www.linkedin.com/in/fareed-ud-din-munawwar-ab693a23a/" target="_blank" rel="noreferrer" className="flex items-center gap-3 text-blue-100 hover:text-white transition-colors">
                          <Linkedin className="w-5 h-5" />
                          <span>Fareed-ud-Din Munawwar</span>
                       </a>
@@ -369,60 +304,45 @@ export default function Home() {
              </div>
 
              <div className="md:col-span-3 p-8">
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                    <FormField
-                      control={form.control}
+                <form onSubmit={handleContactSubmit} className="space-y-6">
+                  <div>
+                    <label htmlFor="name" className="text-sm font-medium mb-2 block">Name</label>
+                    <Input 
+                      id="name"
                       name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Name</FormLabel>
-                          <FormControl>
-                            <Input placeholder="John Doe" className="bg-background/50 border-white/10 focus:border-primary" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
+                      placeholder="John Doe" 
+                      className="bg-background/50 border-white/10 focus:border-primary" 
+                      required
                     />
-                    <FormField
-                      control={form.control}
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="text-sm font-medium mb-2 block">Email</label>
+                    <Input 
+                      id="email"
                       name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email</FormLabel>
-                          <FormControl>
-                            <Input type="email" placeholder="john@example.com" className="bg-background/50 border-white/10 focus:border-primary" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
+                      type="email" 
+                      placeholder="john@example.com" 
+                      className="bg-background/50 border-white/10 focus:border-primary" 
+                      required
                     />
-                    <FormField
-                      control={form.control}
+                  </div>
+                  <div>
+                    <label htmlFor="message" className="text-sm font-medium mb-2 block">Message</label>
+                    <Textarea 
+                      id="message"
                       name="message"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Message</FormLabel>
-                          <FormControl>
-                            <Textarea 
-                              placeholder="Tell me about your project..." 
-                              className="bg-background/50 border-white/10 focus:border-primary min-h-[120px] resize-none" 
-                              {...field} 
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
+                      placeholder="Tell me about your project..." 
+                      className="bg-background/50 border-white/10 focus:border-primary min-h-[120px] resize-none" 
+                      required
                     />
-                    <Button 
-                      type="submit" 
-                      className="w-full bg-gradient-to-r from-primary to-blue-500 hover:from-primary/90 hover:to-blue-600 shadow-lg shadow-primary/25"
-                      disabled={isSending}
-                    >
-                      {isSending ? "Sending..." : "Send Message"}
-                    </Button>
-                  </form>
-                </Form>
+                  </div>
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-gradient-to-r from-primary to-blue-500 hover:from-primary/90 hover:to-blue-600 shadow-lg shadow-primary/25"
+                  >
+                    Send Message
+                  </Button>
+                </form>
              </div>
           </div>
         </div>

@@ -10,19 +10,15 @@ async function seedDatabase() {
     // Skills
     await storage.createSkill({
       category: "Languages",
-      items: ["Kotlin", "Java", "TypeScript", "PHP", "JavaScript"]
+      items: ["Kotlin", "Java", "TypeScript", "JavaScript", "PHP"]
     });
     await storage.createSkill({
-      category: "Mobile Platforms",
-      items: ["Android (Native)", "Moodle Mobile"]
+      category: "Mobile Platforms and Frameworks",
+      items: ["Android (Native)", "React Native", "Moodle Mobile", "Ionic", "Angular"]
     });
     await storage.createSkill({
-      category: "Hybrid Frameworks",
-      items: ["React Native", "Ionic", "Angular"]
-    });
-    await storage.createSkill({
-      category: "Mobile Frameworks",
-      items: ["Jetpack Compose", "Coroutines", "Flow", "Retrofit", "ExoPlayer", "Room", "SQL Delight"]
+      category: "Skills",
+      items: ["Jetpack Compose", "XMLs", "React Native","Coroutines", "Flow", "Retrofit", "ExoPlayer", "Room", "SQL Delight"]
     });
     await storage.createSkill({
       category: "Architecture",
@@ -97,37 +93,55 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
-  // Seed data on startup
-  await seedDatabase();
+  // Only seed database if DATABASE_URL is set (for static sites, skip this)
+  if (process.env.DATABASE_URL) {
+    await seedDatabase();
+  }
 
-  app.get(api.projects.list.path, async (_req, res) => {
-    const projects = await storage.getProjects();
-    res.json(projects);
-  });
-
-  app.get(api.skills.list.path, async (_req, res) => {
-    const skills = await storage.getSkills();
-    res.json(skills);
-  });
-
-  app.get(api.experience.list.path, async (_req, res) => {
-    const exp = await storage.getExperience();
-    res.json(exp);
-  });
-
-  app.post(api.contact.submit.path, async (req, res) => {
-    try {
-      const input = api.contact.submit.input.parse(req.body);
-      await storage.createContactMessage(input);
-      res.json({ success: true });
-    } catch (err) {
-      if (err instanceof z.ZodError) {
-        res.status(400).json({ message: "Invalid input" });
-      } else {
-        res.status(500).json({ message: "Internal server error" });
+  // API routes are optional - only register if database is available
+  // For static sites, these routes won't be called anyway
+  if (process.env.DATABASE_URL) {
+    app.get(api.projects.list.path, async (_req, res) => {
+      try {
+        const projects = await storage.getProjects();
+        res.json(projects);
+      } catch (err) {
+        res.status(500).json({ message: "Database not available" });
       }
-    }
-  });
+    });
+
+    app.get(api.skills.list.path, async (_req, res) => {
+      try {
+        const skills = await storage.getSkills();
+        res.json(skills);
+      } catch (err) {
+        res.status(500).json({ message: "Database not available" });
+      }
+    });
+
+    app.get(api.experience.list.path, async (_req, res) => {
+      try {
+        const exp = await storage.getExperience();
+        res.json(exp);
+      } catch (err) {
+        res.status(500).json({ message: "Database not available" });
+      }
+    });
+
+    app.post(api.contact.submit.path, async (req, res) => {
+      try {
+        const input = api.contact.submit.input.parse(req.body);
+        await storage.createContactMessage(input);
+        res.json({ success: true });
+      } catch (err) {
+        if (err instanceof z.ZodError) {
+          res.status(400).json({ message: "Invalid input" });
+        } else {
+          res.status(500).json({ message: "Internal server error" });
+        }
+      }
+    });
+  }
 
   return httpServer;
 }
