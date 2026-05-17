@@ -76,33 +76,38 @@ export const staticProjects: ProjectWithImage[] = [
 export const staticSkills: Skill[] = [
   {
     id: 1,
-    category: "Languages",
-    items: ["Kotlin (Primary)", "Java", "TypeScript", "PHP", "JavaScript"]
+    category: "Core Languages",
+    items: ["Kotlin (Expert)", "Java", "TypeScript", "PHP", "JavaScript"]
   },
   {
     id: 2,
-    category: "Mobile Platforms",
-    items: ["Android (Native)", "Moodle Mobile"]
+    category: "Android Native",
+    items: ["Jetpack Compose", "Coroutines", "Flow", "XML / View System", "Android SDK"]
   },
   {
     id: 3,
     category: "Hybrid Frameworks",
-    items: ["React Native", "Ionic", "Angular"]
+    items: ["React Native", "Ionic", "Angular", "Cordova"]
   },
   {
     id: 4,
-    category: "Mobile Frameworks",
-    items: ["Jetpack Compose", "Coroutines", "Flow", "Retrofit", "ExoPlayer", "Room", "SQL Delight"]
+    category: "Architecture",
+    items: ["MVVM", "MVI", "Clean Architecture", "Multi-Module", "SOLID Principles", "Design Patterns"]
   },
   {
     id: 5,
-    category: "Architecture",
-    items: ["MVVM", "Clean Architecture", "Multi-Module", "SOLID Principles"]
+    category: "Networking & Storage",
+    items: ["Retrofit", "Ktor", "Room", "SQL Delight", "DataStore", "Moshi / Serialization"]
   },
   {
     id: 6,
-    category: "Tools",
-    items: ["Firebase (Crashlytics, Firestore)", "Hilt", "Dagger", "Git", "Mockito", "Xcode", "MySQL"]
+    category: "E-Learning",
+    items: ["Moodle Mobile", "LMS Integration", "Custom Plugin Development"]
+  },
+  {
+    id: 7,
+    category: "Tools & DevOps",
+    items: ["Firebase", "Hilt / Dagger", "Git / GitHub Actions", "Mockito / Junit", "ExoPlayer", "HyperPay / G-IAP"]
   }
 ];
 
@@ -112,14 +117,14 @@ export const staticExperience: Experience[] = [
     role: "Senior Software Engineer",
     company: "Arbisoft",
     period: "August 2024 – Present",
-    description: "Leading cross-functional teams in Agile environments. Actively involved in hiring processes for senior roles and mentoring interns in native development. Focus on scalable application design and performance optimization, consistently maintaining a 99.98% crash-free rate and 4.8+ ratings on Google Play."
+    description: "Leading cross-functional teams in Agile environments. Architecting scalable mobile solutions and driving technical excellence across major projects like Islam360 and Schoolgram. Actively involved in hiring senior talent and mentoring developers to maintain high engineering standards."
   },
   {
     id: 1,
     role: "Software Engineer",
     company: "Arbisoft",
     period: "August 2021 – August 2024",
-    description: "Leading cross-functional teams in Agile environments. Actively involved in hiring processes for senior roles and mentoring interns in native development. Focus on scalable application design and performance optimization, consistently maintaining a 99.98% crash-free rate and 4.8+ ratings on Google Play."
+    description: "Developed core features for high-traffic mobile applications using Kotlin and Jetpack Compose. Focused on performance optimization, maintaining a 99.98% crash-free rate, and ensuring 4.8+ user ratings. Collaborated on major architecture migrations and UI overhauls."
   }
 ];
 
